@@ -2,7 +2,14 @@ syntax = "proto3";
 
 package grpc;
 
-option go_package = "github.com/Sistemas-Distribuidos-2023-02/Grupo22-Laboratorio-1/proto";
+option go_package = "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto";
+
+message Item {
+    int32 cantidad_llaves = 1;
+    int32 falta_llaves = 2;
+    string region = 3;
+    int32 terminar = 4;
+}
 
 message Mensaje {
     int32 cantidad_llaves = 1;

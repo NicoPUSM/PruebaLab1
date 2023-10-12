@@ -1,4 +1,4 @@
-module github.com/Sistemas-Distribuidos-2023-02/Grupo22-Laboratorio-1
+module github.com/NicoPUSM/PruebaLab1/Prueba-Lab1
 
 go 1.13
 

@@ -3,12 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"net"
-	"strconv"
-	"time"
 
-	pb "github.com/Sistemas-Distribuidos-2023-02/Grupo22-Laboratorio-1/proto"
+	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
 )
 
@@ -16,12 +13,11 @@ type server struct {
 	pb.UnsafeMensajeServiceServer
 }
 
-
 func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
 	fmt.Printf("creando mensaje " + req.Mensaje.Region)
 
 	return &pb.Respuestamensaje{
-		mensajeid: req.Mensaje.Region,
+		Mensajeid: req.Mensaje.Region,
 	}, nil
 }
 
