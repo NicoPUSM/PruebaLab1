@@ -27,7 +27,7 @@ func main() {
 
 	res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
 		Mensaje: &pb.Mensaje{
-			Nombre: generarID(),
+			Nombre: "Pedro",
 		},
 	})
 
