@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 
-	pb "github.com/Grupo22-Laboratorio-2/prueba/proto"
+	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
 )
 

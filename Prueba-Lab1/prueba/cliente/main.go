@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	pb "github.com/Sistemas-Distribuidos-2023-02/Grupo22-Laboratorio-2/prueba/proto"
+	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
 )
 
