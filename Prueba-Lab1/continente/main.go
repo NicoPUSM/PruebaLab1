@@ -39,13 +39,13 @@ func main() {
 		} else {
 			resultado = "muerta"
 		}
+		fmt.Println(resultado)
 
 		serviceClient := pb.NewMensajeServiceClient(conn)
 
 		res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
 			Mensaje: &pb.Mensaje{
-				Nombre: line,
-				Estado: resultado,
+				Estado: line,
 			},
 		})
 
