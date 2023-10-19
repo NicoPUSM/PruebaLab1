@@ -45,7 +45,7 @@ func main() {
 
 		res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
 			Mensaje: &pb.Mensaje{
-				Estado: line,
+				Nombre: line,
 			},
 		})
 
