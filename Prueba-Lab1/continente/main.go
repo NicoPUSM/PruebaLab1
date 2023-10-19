@@ -39,7 +39,10 @@ func main() {
 		} else {
 			resultado = "muerta"
 		}
-		fmt.Println(resultado)
+
+		line = line + "/" + resultado
+
+		fmt.Println(line)
 
 		serviceClient := pb.NewMensajeServiceClient(conn)
 
