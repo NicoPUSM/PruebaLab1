@@ -32,8 +32,7 @@ func main() {
 
 		rand.Seed(time.Now().UnixNano())
 		randomValue := rand.Float64()
-		resultado := ""
-		fmt.Println(line)
+		var resultado string
 
 		if randomValue < 0.55 {
 			resultado = "infectada"
