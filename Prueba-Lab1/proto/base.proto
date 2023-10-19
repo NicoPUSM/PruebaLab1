@@ -6,14 +6,12 @@ option go_package = "./proto";
 
 message Mensaje {
     string nombre = 1;
-    string apellido = 2;
-    string estado = 3;
+    string estado = 2;
 }
 
 message Mensaje_2 {
     string id = 1;
     string nombre = 2;
-    string apellido = 3;
 }
 
 message Crearmensaje{

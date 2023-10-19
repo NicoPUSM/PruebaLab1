@@ -4,48 +4,65 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"math/rand"
 	"os"
+	"time"
 
 	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	content, err := os.ReadFile("names.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer content.Close()
-
-	scanner := bufio.NewScanner(content)
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		fmt.Println(line)
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println(err)
-	}
-
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())
 	}
 
-	serviceClient := pb.NewMensajeServiceClient(conn)
-
-	res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
-		Mensaje: &pb.Mensaje{
-			Nombre: "Pedro",
-		},
-	})
-
+	content, err := os.Open("names.txt")
 	if err != nil {
-		panic("no se creo el mensaje" + err.Error())
+		fmt.Println(err)
+		return
 	}
 
-	fmt.Println(res.Mensajeid)
+	scanner := bufio.NewScanner(content)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		rand.Seed(time.Now().UnixNano())
+		randomValue := rand.Float64()
+		resultado := ""
+		fmt.Println(line)
+
+		if randomValue < 0.55 {
+			resultado = "infectada"
+		} else {
+			resultado = "muerta"
+		}
+
+		println(resultado)
+
+		serviceClient := pb.NewMensajeServiceClient(conn)
+
+		res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
+			Mensaje: &pb.Mensaje{
+				Estado: line,
+			},
+		})
+
+		if err != nil {
+			panic("no se creo el mensaje" + err.Error())
+		}
+
+		fmt.Println(res.Mensajeid)
+
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println(err)
+	}
+
+	content.Close()
+
 }

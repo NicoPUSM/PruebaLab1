@@ -14,10 +14,10 @@ type server struct {
 }
 
 func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
-	fmt.Printf("Recibio a " + req.Mensaje.Nombre)
+	fmt.Println("Recibio a " + req.Mensaje.Estado)
 
 	return &pb.Respuestamensaje{
-		Mensajeid: req.Mensaje.Nombre,
+		Mensajeid: req.Mensaje.Estado,
 	}, nil
 }
 
