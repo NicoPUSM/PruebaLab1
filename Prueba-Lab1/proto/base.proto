@@ -2,20 +2,18 @@ syntax = "proto3";
 
 package grpc;
 
-option go_package = "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto";
-
-message Item {
-    int32 cantidad_llaves = 1;
-    int32 falta_llaves = 2;
-    string region = 3;
-    int32 terminar = 4;
-}
+option go_package = "./proto";
 
 message Mensaje {
-    int32 cantidad_llaves = 1;
-    int32 falta_llaves = 2;
-    string region = 3;
-    int32 terminar = 4;
+    string nombre = 1;
+    string apellido = 2;
+    string estado = 3;
+}
+
+message Mensaje_2 {
+    string id = 1;
+    string nombre = 2;
+    string apellido = 3;
 }
 
 message Crearmensaje{
