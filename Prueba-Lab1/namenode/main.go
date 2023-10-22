@@ -80,17 +80,19 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	}, nil
 }
 
-func main() {
-	contador := 0
+func (s *server) ConsultarEstado(ctx context.Context, req *pb.ConsultarEstadoRequest) (*pb.ConsultarEstadoResponse, error) {
 
-	go startDataNodeServer(":50051", &contador)
-	go startNameNodeServer(":50054")
+	resultados := []string{"hola"}
 
-	select {}
+	return &pb.ConsultarEstadoResponse{
+		Resultados: resultados,
+	}, nil
 }
 
-func startDataNodeServer(address string, contador *int) {
-	listener, err := net.Listen("tcp", address)
+func main() {
+	contador = 0
+
+	listener, err := net.Listen("tcp", ":50052")
 	if err != nil {
 		panic("No se pudo crear la conexión tcp " + err.Error())
 	}
@@ -99,50 +101,8 @@ func startDataNodeServer(address string, contador *int) {
 	pb.RegisterMensajeServiceServer(serv, &server{})
 
 	if err = serv.Serve(listener); err != nil {
-		panic("No se pudo iniciar el servidor en " + address + ": " + err.Error())
-	}
-}
-
-type nameNodeServer struct {
-	pb.UnsafeMensajeServiceServer
-}
-
-func (s *nameNodeServer) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
-	conn, err := grpc.Dial("localhost:50055", grpc.WithInsecure())
-	if err != nil {
-		fmt.Println("No se puede conectar con el DataNode: ", err)
-		return nil, err
-	}
-	defer conn.Close()
-
-	datanodeClient := pb.NewMensajeServiceClient(conn)
-
-	res, err := datanodeClient.Create(ctx, &pb.Crearmensaje{
-		Mensaje: &pb.Mensaje{
-			Nombre: req.Mensaje.Nombre,
-		},
-	})
-	if err != nil {
-		panic("no se creo el mensaje" + err.Error())
+		panic("No se pudo iniciar el servidor " + err.Error())
 	}
 
-	fmt.Println(res.Mensajeid)
-
-	return &pb.Respuestamensaje{
-		Mensajeid: res.Mensajeid,
-	}, nil
-}
-
-func startNameNodeServer(address string) {
-	listener, err := net.Listen("tcp", address)
-	if err != nil {
-		panic("No se pudo crear la conexión tcp " + err.Error())
-	}
-
-	serv := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(serv, &nameNodeServer{})
-
-	if err = serv.Serve(listener); err != nil {
-		panic("No se pudo iniciar el servidor en " + address + ": " + err.Error())
-	}
+	listener.Close()
 }
