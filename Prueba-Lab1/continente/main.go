@@ -35,12 +35,12 @@ func main() {
 		var resultado string
 
 		if randomValue < 0.55 {
-			resultado = "infectada"
+			resultado = "infectado"
 		} else {
-			resultado = "muerta"
+			resultado = "muerto"
 		}
 
-		line = line + "/" + resultado
+		line = line + " " + resultado
 
 		fmt.Println(line)
 
