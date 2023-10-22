@@ -11,7 +11,7 @@ import (
 )
 
 type server struct {
-	pb.UnsafeMensajeServiceServer
+	pb.UnsafeDataServiceServer
 }
 
 func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
@@ -42,7 +42,7 @@ func main() {
 	}
 
 	serv := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(serv, &server{})
+	pb.RegisterDataServiceServer(serv, &server{})
 
 	if err = serv.Serve(listener); err != nil {
 		panic("no se inicio el servidor " + err.Error())

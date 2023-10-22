@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure()) // Conectar al puerto 50052
+	conn, err := grpc.Dial("localhost:50055", grpc.WithInsecure())
 	var estado string
 
 	if err != nil {
@@ -22,9 +22,8 @@ func main() {
 
 	serviceClient := proto.NewMensajeServiceClient(conn)
 
-	// Llama a la función correcta en el servicio, que en este caso parece ser "Create".
-	res, err := serviceClient.Create(context.Background(), &proto.Crearmensaje{
-		Mensaje: &proto.Mensaje{
+	res, err := serviceClient.Create(context.Background(), &proto.ConsultarEstadoRequest{
+		estado: &proto.estado{
 			Nombre: estado,
 		},
 	})

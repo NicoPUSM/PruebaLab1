@@ -105,9 +105,8 @@ func main() {
 		panic("No se pudo iniciar el servidor de mensajes " + err.Error())
 	}
 
-	listenerMsg.Close()
-
-	listenerState, err := net.Listen("tcp", ":50054")
+	// Iniciar el servidor para el servicio de estado en el puerto 50054.
+	listenerState, err := net.Listen("tcp", ":50055")
 	if err != nil {
 		panic("No se pudo crear la conexión tcp para el servicio de estado " + err.Error())
 	}
@@ -119,5 +118,6 @@ func main() {
 		panic("No se pudo iniciar el servidor de estado " + err.Error())
 	}
 
+	listenerMsg.Close()
 	listenerState.Close()
 }

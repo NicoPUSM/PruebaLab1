@@ -15,8 +15,12 @@ message Respuestamensaje {
     string mensajeid = 1;
 }
 
+message Estado {
+    string nombre = 1;
+}
+
 message ConsultarEstadoRequest {
-    string estado = 1;
+    Estado estado = 1;
 }
 
 message ConsultarEstadoResponse {

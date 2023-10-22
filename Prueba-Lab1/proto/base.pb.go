@@ -161,18 +161,65 @@ func (x *Respuestamensaje) GetMensajeid() string {
 	return ""
 }
 
+type Estado struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Nombre string `protobuf:"bytes,1,opt,name=nombre,proto3" json:"nombre,omitempty"`
+}
+
+func (x *Estado) Reset() {
+	*x = Estado{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_base_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Estado) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Estado) ProtoMessage() {}
+
+func (x *Estado) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_base_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Estado.ProtoReflect.Descriptor instead.
+func (*Estado) Descriptor() ([]byte, []int) {
+	return file_proto_base_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Estado) GetNombre() string {
+	if x != nil {
+		return x.Nombre
+	}
+	return ""
+}
+
 type ConsultarEstadoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Estado string `protobuf:"bytes,1,opt,name=estado,proto3" json:"estado,omitempty"`
+	Estado *Estado `protobuf:"bytes,1,opt,name=estado,proto3" json:"estado,omitempty"`
 }
 
 func (x *ConsultarEstadoRequest) Reset() {
 	*x = ConsultarEstadoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_base_proto_msgTypes[3]
+		mi := &file_proto_base_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -185,7 +232,7 @@ func (x *ConsultarEstadoRequest) String() string {
 func (*ConsultarEstadoRequest) ProtoMessage() {}
 
 func (x *ConsultarEstadoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_base_proto_msgTypes[3]
+	mi := &file_proto_base_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -198,14 +245,14 @@ func (x *ConsultarEstadoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsultarEstadoRequest.ProtoReflect.Descriptor instead.
 func (*ConsultarEstadoRequest) Descriptor() ([]byte, []int) {
-	return file_proto_base_proto_rawDescGZIP(), []int{3}
+	return file_proto_base_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ConsultarEstadoRequest) GetEstado() string {
+func (x *ConsultarEstadoRequest) GetEstado() *Estado {
 	if x != nil {
 		return x.Estado
 	}
-	return ""
+	return nil
 }
 
 type ConsultarEstadoResponse struct {
@@ -219,7 +266,7 @@ type ConsultarEstadoResponse struct {
 func (x *ConsultarEstadoResponse) Reset() {
 	*x = ConsultarEstadoResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_base_proto_msgTypes[4]
+		mi := &file_proto_base_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -232,7 +279,7 @@ func (x *ConsultarEstadoResponse) String() string {
 func (*ConsultarEstadoResponse) ProtoMessage() {}
 
 func (x *ConsultarEstadoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_base_proto_msgTypes[4]
+	mi := &file_proto_base_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -245,7 +292,7 @@ func (x *ConsultarEstadoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsultarEstadoResponse.ProtoReflect.Descriptor instead.
 func (*ConsultarEstadoResponse) Descriptor() ([]byte, []int) {
-	return file_proto_base_proto_rawDescGZIP(), []int{4}
+	return file_proto_base_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ConsultarEstadoResponse) GetResultados() []string {
@@ -268,9 +315,12 @@ var file_proto_base_proto_rawDesc = []byte{
 	0x73, 0x61, 0x6a, 0x65, 0x22, 0x30, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x75, 0x65, 0x73, 0x74,
 	0x61, 0x6d, 0x65, 0x6e, 0x73, 0x61, 0x6a, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6d, 0x65, 0x6e, 0x73,
 	0x61, 0x6a, 0x65, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x65, 0x6e,
-	0x73, 0x61, 0x6a, 0x65, 0x69, 0x64, 0x22, 0x30, 0x0a, 0x16, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6c,
-	0x74, 0x61, 0x72, 0x45, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x16, 0x0a, 0x06, 0x65, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x73, 0x61, 0x6a, 0x65, 0x69, 0x64, 0x22, 0x20, 0x0a, 0x06, 0x45, 0x73, 0x74, 0x61, 0x64, 0x6f,
+	0x12, 0x16, 0x0a, 0x06, 0x6e, 0x6f, 0x6d, 0x62, 0x72, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x6e, 0x6f, 0x6d, 0x62, 0x72, 0x65, 0x22, 0x3e, 0x0a, 0x16, 0x43, 0x6f, 0x6e, 0x73,
+	0x75, 0x6c, 0x74, 0x61, 0x72, 0x45, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x24, 0x0a, 0x06, 0x65, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x73, 0x74, 0x61, 0x64, 0x6f,
 	0x52, 0x06, 0x65, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x22, 0x39, 0x0a, 0x17, 0x43, 0x6f, 0x6e, 0x73,
 	0x75, 0x6c, 0x74, 0x61, 0x72, 0x45, 0x73, 0x74, 0x61, 0x64, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x61, 0x64, 0x6f,
@@ -305,27 +355,29 @@ func file_proto_base_proto_rawDescGZIP() []byte {
 	return file_proto_base_proto_rawDescData
 }
 
-var file_proto_base_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_base_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_base_proto_goTypes = []interface{}{
 	(*Mensaje)(nil),                 // 0: grpc.Mensaje
 	(*Crearmensaje)(nil),            // 1: grpc.Crearmensaje
 	(*Respuestamensaje)(nil),        // 2: grpc.Respuestamensaje
-	(*ConsultarEstadoRequest)(nil),  // 3: grpc.ConsultarEstadoRequest
-	(*ConsultarEstadoResponse)(nil), // 4: grpc.ConsultarEstadoResponse
+	(*Estado)(nil),                  // 3: grpc.Estado
+	(*ConsultarEstadoRequest)(nil),  // 4: grpc.ConsultarEstadoRequest
+	(*ConsultarEstadoResponse)(nil), // 5: grpc.ConsultarEstadoResponse
 }
 var file_proto_base_proto_depIdxs = []int32{
 	0, // 0: grpc.Crearmensaje.mensaje:type_name -> grpc.Mensaje
-	1, // 1: grpc.MensajeService.Create:input_type -> grpc.Crearmensaje
-	3, // 2: grpc.MensajeService.ConsultarEstado:input_type -> grpc.ConsultarEstadoRequest
-	1, // 3: grpc.DataService.Create:input_type -> grpc.Crearmensaje
-	2, // 4: grpc.MensajeService.Create:output_type -> grpc.Respuestamensaje
-	4, // 5: grpc.MensajeService.ConsultarEstado:output_type -> grpc.ConsultarEstadoResponse
-	2, // 6: grpc.DataService.Create:output_type -> grpc.Respuestamensaje
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	3, // 1: grpc.ConsultarEstadoRequest.estado:type_name -> grpc.Estado
+	1, // 2: grpc.MensajeService.Create:input_type -> grpc.Crearmensaje
+	4, // 3: grpc.MensajeService.ConsultarEstado:input_type -> grpc.ConsultarEstadoRequest
+	1, // 4: grpc.DataService.Create:input_type -> grpc.Crearmensaje
+	2, // 5: grpc.MensajeService.Create:output_type -> grpc.Respuestamensaje
+	5, // 6: grpc.MensajeService.ConsultarEstado:output_type -> grpc.ConsultarEstadoResponse
+	2, // 7: grpc.DataService.Create:output_type -> grpc.Respuestamensaje
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_base_proto_init() }
@@ -371,7 +423,7 @@ func file_proto_base_proto_init() {
 			}
 		}
 		file_proto_base_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConsultarEstadoRequest); i {
+			switch v := v.(*Estado); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -383,6 +435,18 @@ func file_proto_base_proto_init() {
 			}
 		}
 		file_proto_base_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ConsultarEstadoRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_base_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ConsultarEstadoResponse); i {
 			case 0:
 				return &v.state
@@ -401,7 +465,7 @@ func file_proto_base_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_base_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
