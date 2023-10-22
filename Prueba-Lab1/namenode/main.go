@@ -92,7 +92,7 @@ func (s *server) ConsultarEstado(ctx context.Context, req *pb.ConsultarEstadoReq
 func main() {
 	contador = 0
 
-	listener, err := net.Listen("tcp", ":50052")
+	listener, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		panic("No se pudo crear la conexión tcp " + err.Error())
 	}
