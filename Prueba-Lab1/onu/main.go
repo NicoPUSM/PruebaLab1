@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
+	"github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:50054", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure()) // Conectar al puerto 50052
 	var estado string
 
 	if err != nil {
@@ -20,18 +20,18 @@ func main() {
 	fmt.Scan(&estado)
 	fmt.Println(estado)
 
-	serviceClient := pb.NewMensajeServiceClient(conn)
+	serviceClient := proto.NewMensajeServiceClient(conn)
 
-	res, err := serviceClient.Create(context.Background(), &pb.Crearmensaje{
-		Mensaje: &pb.Mensaje{
+	// Llama a la función correcta en el servicio, que en este caso parece ser "Create".
+	res, err := serviceClient.Create(context.Background(), &proto.Crearmensaje{
+		Mensaje: &proto.Mensaje{
 			Nombre: estado,
 		},
 	})
 
 	if err != nil {
-		panic("no se creo el mensaje" + err.Error())
+		panic("no se creó el mensaje" + err.Error())
 	}
 
 	fmt.Println(res.Mensajeid)
-
 }

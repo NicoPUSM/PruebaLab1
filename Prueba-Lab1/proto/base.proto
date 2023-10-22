@@ -25,8 +25,5 @@ message ConsultarEstadoResponse {
 
 service MensajeService {
     rpc Create(Crearmensaje) returns (Respuestamensaje);
-}
-
-service ListaService{
     rpc ConsultarEstado(ConsultarEstadoRequest) returns (ConsultarEstadoResponse);
 }

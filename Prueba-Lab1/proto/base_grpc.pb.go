@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MensajeServiceClient interface {
 	Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error)
+	ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error)
 }
 
 type mensajeServiceClient struct {
@@ -42,11 +43,21 @@ func (c *mensajeServiceClient) Create(ctx context.Context, in *Crearmensaje, opt
 	return out, nil
 }
 
+func (c *mensajeServiceClient) ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error) {
+	out := new(ConsultarEstadoResponse)
+	err := c.cc.Invoke(ctx, "/grpc.MensajeService/ConsultarEstado", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MensajeServiceServer is the server API for MensajeService service.
 // All implementations must embed UnimplementedMensajeServiceServer
 // for forward compatibility
 type MensajeServiceServer interface {
 	Create(context.Context, *Crearmensaje) (*Respuestamensaje, error)
+	ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error)
 	mustEmbedUnimplementedMensajeServiceServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedMensajeServiceServer struct {
 
 func (UnimplementedMensajeServiceServer) Create(context.Context, *Crearmensaje) (*Respuestamensaje, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedMensajeServiceServer) ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConsultarEstado not implemented")
 }
 func (UnimplementedMensajeServiceServer) mustEmbedUnimplementedMensajeServiceServer() {}
 
@@ -88,6 +102,24 @@ func _MensajeService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MensajeService_ConsultarEstado_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConsultarEstadoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MensajeServiceServer).ConsultarEstado(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.MensajeService/ConsultarEstado",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MensajeServiceServer).ConsultarEstado(ctx, req.(*ConsultarEstadoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MensajeService_ServiceDesc is the grpc.ServiceDesc for MensajeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -99,91 +131,9 @@ var MensajeService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Create",
 			Handler:    _MensajeService_Create_Handler,
 		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/base.proto",
-}
-
-// ListaServiceClient is the client API for ListaService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ListaServiceClient interface {
-	ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error)
-}
-
-type listaServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewListaServiceClient(cc grpc.ClientConnInterface) ListaServiceClient {
-	return &listaServiceClient{cc}
-}
-
-func (c *listaServiceClient) ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error) {
-	out := new(ConsultarEstadoResponse)
-	err := c.cc.Invoke(ctx, "/grpc.ListaService/ConsultarEstado", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ListaServiceServer is the server API for ListaService service.
-// All implementations must embed UnimplementedListaServiceServer
-// for forward compatibility
-type ListaServiceServer interface {
-	ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error)
-	mustEmbedUnimplementedListaServiceServer()
-}
-
-// UnimplementedListaServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedListaServiceServer struct {
-}
-
-func (UnimplementedListaServiceServer) ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConsultarEstado not implemented")
-}
-func (UnimplementedListaServiceServer) mustEmbedUnimplementedListaServiceServer() {}
-
-// UnsafeListaServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ListaServiceServer will
-// result in compilation errors.
-type UnsafeListaServiceServer interface {
-	mustEmbedUnimplementedListaServiceServer()
-}
-
-func RegisterListaServiceServer(s grpc.ServiceRegistrar, srv ListaServiceServer) {
-	s.RegisterService(&ListaService_ServiceDesc, srv)
-}
-
-func _ListaService_ConsultarEstado_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConsultarEstadoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ListaServiceServer).ConsultarEstado(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/grpc.ListaService/ConsultarEstado",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListaServiceServer).ConsultarEstado(ctx, req.(*ConsultarEstadoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// ListaService_ServiceDesc is the grpc.ServiceDesc for ListaService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var ListaService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.ListaService",
-	HandlerType: (*ListaServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ConsultarEstado",
-			Handler:    _ListaService_ConsultarEstado_Handler,
+			Handler:    _MensajeService_ConsultarEstado_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
