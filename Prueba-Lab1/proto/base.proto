@@ -27,3 +27,7 @@ service MensajeService {
     rpc Create(Crearmensaje) returns (Respuestamensaje);
     rpc ConsultarEstado(ConsultarEstadoRequest) returns (ConsultarEstadoResponse);
 }
+
+service DataService {
+    rpc Create(Crearmensaje) returns (Respuestamensaje);
+}
