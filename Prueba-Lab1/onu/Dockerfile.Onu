@@ -1,0 +1,15 @@
+FROM golang:1.21.1
+
+WORKDIR /onu
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY onu/main.go ./
+
+RUN go get github.com/Francisca-Gonzalez/Lab2_distribuidos
+
+RUN go build -o onu_bin .
+
+ENTRYPOINT [ "/onu/onu_bin" ]

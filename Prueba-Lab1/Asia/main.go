@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	contador := 1
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
 	if err != nil {
@@ -35,14 +36,12 @@ func main() {
 		var resultado string
 
 		if randomValue < 0.55 {
-			resultado = "infectada"
+			resultado = "infectado"
 		} else {
-			resultado = "muerta"
+			resultado = "muerto"
 		}
 
 		line = line + " " + resultado
-
-		fmt.Println(line)
 
 		serviceClient := pb.NewMensajeServiceClient(conn)
 
@@ -56,7 +55,13 @@ func main() {
 			panic("no se creo el mensaje" + err.Error())
 		}
 
-		fmt.Println(res.Mensajeid)
+		fmt.Println("Estado enviado:", res.Mensajeid)
+
+		if contador < 5 {
+			contador += 1
+		} else {
+			time.Sleep(3 * time.Second)
+		}
 
 	}
 

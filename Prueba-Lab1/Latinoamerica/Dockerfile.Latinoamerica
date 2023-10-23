@@ -1,0 +1,16 @@
+FROM golang:1.21.1
+
+WORKDIR /Latinoamerica
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY Latinoamerica/names.txt . /Latinoamerica
+COPY Latinoamerica/main.go ./
+
+RUN go get github.com/Francisca-Gonzalez/Lab2_distribuidos
+
+RUN go build -o Latinoamerica_bin .
+
+ENTRYPOINT [ "/Latinoamerica/Latinoamerica_bin" ]

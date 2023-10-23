@@ -15,23 +15,27 @@ func main() {
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())
 	}
+	for {
+		fmt.Print("Escribe infectado o muerto: ")
+		fmt.Scan(&estado)
+		fmt.Println(estado)
 
-	fmt.Print("Escribe afectado o muerto: ")
-	fmt.Scan(&estado)
-	fmt.Println(estado)
+		serviceClient := pb.NewMensajeServiceClient(conn)
 
-	serviceClient := pb.NewMensajeServiceClient(conn)
+		res, err := serviceClient.CreateLista(context.Background(), &pb.ConsultarLista{
+			Estado: &pb.Estado{
+				Nombre: estado,
+			},
+		})
 
-	res, err := serviceClient.CreateLista(context.Background(), &pb.ConsultarLista{
-		Estado: &pb.Estado{
-			Nombre: estado,
-		},
-	})
+		if err != nil {
+			panic("no se creo el mensaje" + err.Error())
+		}
 
-	if err != nil {
-		panic("no se creo el mensaje" + err.Error())
+		for _, nombre := range res.Estadoid {
+			fmt.Println(nombre)
+		}
+
+		fmt.Println(" ")
 	}
-
-	fmt.Println(res.Estadoid)
-
 }
