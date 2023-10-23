@@ -23,7 +23,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MensajeServiceClient interface {
 	Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error)
-	ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error)
 }
 
 type mensajeServiceClient struct {
@@ -43,21 +42,11 @@ func (c *mensajeServiceClient) Create(ctx context.Context, in *Crearmensaje, opt
 	return out, nil
 }
 
-func (c *mensajeServiceClient) ConsultarEstado(ctx context.Context, in *ConsultarEstadoRequest, opts ...grpc.CallOption) (*ConsultarEstadoResponse, error) {
-	out := new(ConsultarEstadoResponse)
-	err := c.cc.Invoke(ctx, "/grpc.MensajeService/ConsultarEstado", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // MensajeServiceServer is the server API for MensajeService service.
 // All implementations must embed UnimplementedMensajeServiceServer
 // for forward compatibility
 type MensajeServiceServer interface {
 	Create(context.Context, *Crearmensaje) (*Respuestamensaje, error)
-	ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error)
 	mustEmbedUnimplementedMensajeServiceServer()
 }
 
@@ -67,9 +56,6 @@ type UnimplementedMensajeServiceServer struct {
 
 func (UnimplementedMensajeServiceServer) Create(context.Context, *Crearmensaje) (*Respuestamensaje, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedMensajeServiceServer) ConsultarEstado(context.Context, *ConsultarEstadoRequest) (*ConsultarEstadoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConsultarEstado not implemented")
 }
 func (UnimplementedMensajeServiceServer) mustEmbedUnimplementedMensajeServiceServer() {}
 
@@ -102,24 +88,6 @@ func _MensajeService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MensajeService_ConsultarEstado_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConsultarEstadoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MensajeServiceServer).ConsultarEstado(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/grpc.MensajeService/ConsultarEstado",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MensajeServiceServer).ConsultarEstado(ctx, req.(*ConsultarEstadoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // MensajeService_ServiceDesc is the grpc.ServiceDesc for MensajeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -130,96 +98,6 @@ var MensajeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _MensajeService_Create_Handler,
-		},
-		{
-			MethodName: "ConsultarEstado",
-			Handler:    _MensajeService_ConsultarEstado_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/base.proto",
-}
-
-// DataServiceClient is the client API for DataService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DataServiceClient interface {
-	Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error)
-}
-
-type dataServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewDataServiceClient(cc grpc.ClientConnInterface) DataServiceClient {
-	return &dataServiceClient{cc}
-}
-
-func (c *dataServiceClient) Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error) {
-	out := new(Respuestamensaje)
-	err := c.cc.Invoke(ctx, "/grpc.DataService/Create", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// DataServiceServer is the server API for DataService service.
-// All implementations must embed UnimplementedDataServiceServer
-// for forward compatibility
-type DataServiceServer interface {
-	Create(context.Context, *Crearmensaje) (*Respuestamensaje, error)
-	mustEmbedUnimplementedDataServiceServer()
-}
-
-// UnimplementedDataServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedDataServiceServer struct {
-}
-
-func (UnimplementedDataServiceServer) Create(context.Context, *Crearmensaje) (*Respuestamensaje, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedDataServiceServer) mustEmbedUnimplementedDataServiceServer() {}
-
-// UnsafeDataServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DataServiceServer will
-// result in compilation errors.
-type UnsafeDataServiceServer interface {
-	mustEmbedUnimplementedDataServiceServer()
-}
-
-func RegisterDataServiceServer(s grpc.ServiceRegistrar, srv DataServiceServer) {
-	s.RegisterService(&DataService_ServiceDesc, srv)
-}
-
-func _DataService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Crearmensaje)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DataServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/grpc.DataService/Create",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataServiceServer).Create(ctx, req.(*Crearmensaje))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// DataService_ServiceDesc is the grpc.ServiceDesc for DataService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var DataService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.DataService",
-	HandlerType: (*DataServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Create",
-			Handler:    _DataService_Create_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

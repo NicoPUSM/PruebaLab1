@@ -12,19 +12,16 @@ import (
 	"google.golang.org/grpc"
 )
 
-type msgserver struct {
+type server struct {
 	pb.UnsafeMensajeServiceServer
-}
-
-type stateServer struct {
-	pb.UnsafeListaServiceServer
 }
 
 var contador int
 
-func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
+func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
+
 	contador++
-	fmt.Println("Recibió a " + req.Mensaje.Nombre)
+	fmt.Println("Recibio a " + req.Mensaje.Nombre)
 
 	archivo, err := os.OpenFile("DATA.txt", os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
@@ -34,12 +31,12 @@ func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respu
 
 	palabras := strings.Split(req.Mensaje.Nombre, " ")
 
-	var datanode string
+	var datanote string
 
 	cadena := strconv.Itoa(contador)
 
 	if string(palabras[1][0]) <= "M" {
-		datanode = "1"
+		datanote = "1"
 		conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
 		if err != nil {
 			fmt.Println("No se puede conectar con el DataNode: ", err)
@@ -55,7 +52,7 @@ func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respu
 			},
 		})
 	} else {
-		datanode = "2"
+		datanote = "2"
 		conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
 		if err != nil {
 			fmt.Println("No se puede conectar con el DataNode: ", err)
@@ -72,7 +69,7 @@ func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respu
 		})
 	}
 
-	_, err = archivo.WriteString(cadena + " " + datanode + " " + palabras[2] + "\n")
+	_, err = archivo.WriteString(cadena + " " + datanote + " " + palabras[2] + "\n")
 
 	if err != nil {
 		fmt.Println("Error al escribir en el archivo", err)
@@ -83,47 +80,20 @@ func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respu
 	}, nil
 }
 
-func (s *server) ConsultarEstado(ctx context.Context, req *pb.ConsultarEstadoRequest) (*pb.ConsultarEstadoResponse, error) {
-	resultados := []string{"Estado1", "Estado2", "Estado3"}
-
-	return &pb.ConsultarEstadoResponse{
-		Resultados: resultados,
-	}, nil
-}
-
 func main() {
 	contador = 0
 
-	// Iniciar el servidor para el servicio de mensajes en el puerto 50051.
-	listenerMsg, err := net.Listen("tcp", ":50051")
+	listner, err := net.Listen("tcp", ":50051")
+
 	if err != nil {
-		panic("No se pudo crear la conexión tcp para el servidor de mensajes " + err.Error())
+		panic("no se creo la conexion tcp " + err.Error())
 	}
 
-	servMsg := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(servMsg, &msgserver{})
+	serv := grpc.NewServer()
 
-	go func() {
-		if err := servMsg.Serve(listenerMsg); err != nil {
-			panic("No se pudo iniciar el servidor de mensajes " + err.Error())
-		}
-	}()
+	pb.RegisterMensajeServiceServer(serv, &server{})
 
-	// Iniciar el servidor para el servicio de estado en el puerto 50055.
-	listenerState, err := net.Listen("tcp", ":50055")
-	if err != nil {
-		panic("No se pudo crear la conexión tcp para el servidor de estado " + err.Error())
+	if err = serv.Serve(listner); err != nil {
+		panic("no se inicio el server " + err.Error())
 	}
-
-	servState := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(servState, &stateServer{})
-
-	go func() {
-		if err := servState.Serve(listenerState); err != nil {
-			panic("No se pudo iniciar el servidor de estado " + err.Error())
-		}
-	}()
-
-	// Mantener los servidores en ejecución.
-	select {}
 }

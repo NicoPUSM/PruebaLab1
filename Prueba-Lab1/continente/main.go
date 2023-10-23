@@ -35,9 +35,9 @@ func main() {
 		var resultado string
 
 		if randomValue < 0.55 {
-			resultado = "infectado"
+			resultado = "infectada"
 		} else {
-			resultado = "muerto"
+			resultado = "muerta"
 		}
 
 		line = line + " " + resultado
