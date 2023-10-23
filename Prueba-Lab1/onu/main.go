@@ -22,8 +22,8 @@ func main() {
 
 	serviceClient := proto.NewMensajeServiceClient(conn)
 
-	res, err := serviceClient.Create(context.Background(), &proto.ConsultarEstadoRequest{
-		estado: &proto.estado{
+	res, err := serviceClient.ConsultarEstado(context.Background(), &proto.ConsultarEstadoRequest{
+		Estado: &proto.Estado{
 			Nombre: estado,
 		},
 	})
@@ -32,5 +32,5 @@ func main() {
 		panic("no se creó el mensaje" + err.Error())
 	}
 
-	fmt.Println(res.Mensajeid)
+	fmt.Println(res.Resultados)
 }

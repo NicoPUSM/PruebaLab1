@@ -16,6 +16,10 @@ type server struct {
 	pb.UnsafeMensajeServiceServer
 }
 
+type stateServer struct {
+	pb.UnsafeListaServiceServer
+}
+
 var contador int
 
 func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
@@ -80,8 +84,6 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 }
 
 func (s *server) ConsultarEstado(ctx context.Context, req *pb.ConsultarEstadoRequest) (*pb.ConsultarEstadoResponse, error) {
-	// Lógica para consultar el estado aquí.
-	// Por ahora, simplemente retornamos una lista de ejemplo.
 	resultados := []string{"Estado1", "Estado2", "Estado3"}
 
 	return &pb.ConsultarEstadoResponse{
@@ -95,29 +97,33 @@ func main() {
 	// Iniciar el servidor para el servicio de mensajes en el puerto 50051.
 	listenerMsg, err := net.Listen("tcp", ":50051")
 	if err != nil {
-		panic("No se pudo crear la conexión tcp " + err.Error())
+		panic("No se pudo crear la conexión tcp para el servidor de mensajes " + err.Error())
 	}
 
 	servMsg := grpc.NewServer()
 	pb.RegisterMensajeServiceServer(servMsg, &server{})
 
-	if err = servMsg.Serve(listenerMsg); err != nil {
-		panic("No se pudo iniciar el servidor de mensajes " + err.Error())
-	}
+	go func() {
+		if err := servMsg.Serve(listenerMsg); err != nil {
+			panic("No se pudo iniciar el servidor de mensajes " + err.Error())
+		}
+	}()
 
-	// Iniciar el servidor para el servicio de estado en el puerto 50054.
+	// Iniciar el servidor para el servicio de estado en el puerto 50055.
 	listenerState, err := net.Listen("tcp", ":50055")
 	if err != nil {
-		panic("No se pudo crear la conexión tcp para el servicio de estado " + err.Error())
+		panic("No se pudo crear la conexión tcp para el servidor de estado " + err.Error())
 	}
 
 	servState := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(servState, &server{})
+	pb.RegisterMensajeServiceServer(servState, &stateServer{})
 
-	if err = servState.Serve(listenerState); err != nil {
-		panic("No se pudo iniciar el servidor de estado " + err.Error())
-	}
+	go func() {
+		if err := servState.Serve(listenerState); err != nil {
+			panic("No se pudo iniciar el servidor de estado " + err.Error())
+		}
+	}()
 
-	listenerMsg.Close()
-	listenerState.Close()
+	// Mantener los servidores en ejecución.
+	select {}
 }
