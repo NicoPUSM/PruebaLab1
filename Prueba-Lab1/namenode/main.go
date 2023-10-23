@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-type server struct {
+type msgserver struct {
 	pb.UnsafeMensajeServiceServer
 }
 
@@ -22,7 +22,7 @@ type stateServer struct {
 
 var contador int
 
-func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
+func (s *msgserver) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
 	contador++
 	fmt.Println("Recibió a " + req.Mensaje.Nombre)
 
@@ -101,7 +101,7 @@ func main() {
 	}
 
 	servMsg := grpc.NewServer()
-	pb.RegisterMensajeServiceServer(servMsg, &server{})
+	pb.RegisterMensajeServiceServer(servMsg, &msgserver{})
 
 	go func() {
 		if err := servMsg.Serve(listenerMsg); err != nil {
