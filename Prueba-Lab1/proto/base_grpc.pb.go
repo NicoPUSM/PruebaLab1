@@ -23,6 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MensajeServiceClient interface {
 	Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error)
+	CreateLista(ctx context.Context, in *ConsultarLista, opts ...grpc.CallOption) (*RespuestaLista, error)
+	CreateMutuo(ctx context.Context, in *EnviarLista, opts ...grpc.CallOption) (*RecibirLista, error)
 }
 
 type mensajeServiceClient struct {
@@ -42,11 +44,31 @@ func (c *mensajeServiceClient) Create(ctx context.Context, in *Crearmensaje, opt
 	return out, nil
 }
 
+func (c *mensajeServiceClient) CreateLista(ctx context.Context, in *ConsultarLista, opts ...grpc.CallOption) (*RespuestaLista, error) {
+	out := new(RespuestaLista)
+	err := c.cc.Invoke(ctx, "/grpc.MensajeService/CreateLista", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *mensajeServiceClient) CreateMutuo(ctx context.Context, in *EnviarLista, opts ...grpc.CallOption) (*RecibirLista, error) {
+	out := new(RecibirLista)
+	err := c.cc.Invoke(ctx, "/grpc.MensajeService/CreateMutuo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MensajeServiceServer is the server API for MensajeService service.
 // All implementations must embed UnimplementedMensajeServiceServer
 // for forward compatibility
 type MensajeServiceServer interface {
 	Create(context.Context, *Crearmensaje) (*Respuestamensaje, error)
+	CreateLista(context.Context, *ConsultarLista) (*RespuestaLista, error)
+	CreateMutuo(context.Context, *EnviarLista) (*RecibirLista, error)
 	mustEmbedUnimplementedMensajeServiceServer()
 }
 
@@ -56,6 +78,12 @@ type UnimplementedMensajeServiceServer struct {
 
 func (UnimplementedMensajeServiceServer) Create(context.Context, *Crearmensaje) (*Respuestamensaje, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedMensajeServiceServer) CreateLista(context.Context, *ConsultarLista) (*RespuestaLista, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateLista not implemented")
+}
+func (UnimplementedMensajeServiceServer) CreateMutuo(context.Context, *EnviarLista) (*RecibirLista, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMutuo not implemented")
 }
 func (UnimplementedMensajeServiceServer) mustEmbedUnimplementedMensajeServiceServer() {}
 
@@ -88,6 +116,42 @@ func _MensajeService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MensajeService_CreateLista_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConsultarLista)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MensajeServiceServer).CreateLista(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.MensajeService/CreateLista",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MensajeServiceServer).CreateLista(ctx, req.(*ConsultarLista))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MensajeService_CreateMutuo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnviarLista)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MensajeServiceServer).CreateMutuo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.MensajeService/CreateMutuo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MensajeServiceServer).CreateMutuo(ctx, req.(*EnviarLista))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MensajeService_ServiceDesc is the grpc.ServiceDesc for MensajeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +162,14 @@ var MensajeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _MensajeService_Create_Handler,
+		},
+		{
+			MethodName: "CreateLista",
+			Handler:    _MensajeService_CreateLista_Handler,
+		},
+		{
+			MethodName: "CreateMutuo",
+			Handler:    _MensajeService_CreateMutuo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

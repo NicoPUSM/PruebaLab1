@@ -80,6 +80,21 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	}, nil
 }
 
+func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.RespuestaLista, error) {
+	archivo, err := os.OpenFile("DATA.txt", os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
+
+	if err != nil {
+		fmt.Println("Error al crear archivo", err)
+	}
+	defer archivo.Close()
+
+	lista := []string{"Hola", "dd"}
+
+	return &pb.RespuestaLista{
+		Estadoid: lista,
+	}, nil
+}
+
 func main() {
 	contador = 0
 

@@ -35,6 +35,10 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	}, nil
 }
 
+func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.RespuestaLista, error) {
+	return nil, fmt.Errorf("CreateLista is not implemented")
+}
+
 func main() {
 	listener, err := net.Listen("tcp", ":50052")
 	if err != nil {

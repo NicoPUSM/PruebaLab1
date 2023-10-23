@@ -6,12 +6,6 @@ option go_package = "./proto";
 
 message Mensaje {
     string nombre = 1;
-    string estado = 2;
-}
-
-message Mensaje_2 {
-    string id = 1;
-    string nombre = 2;
 }
 
 message Crearmensaje{
@@ -22,6 +16,32 @@ message Respuestamensaje{
     string mensajeid = 1;
 }
 
+message Estado {
+    string nombre = 1;
+}
+
+message ConsultarLista {
+    Estado estado = 1;
+}
+
+message RespuestaLista {
+    repeated string estadoid = 1;
+}
+
+message Listado {
+    repeated string nombre = 1;
+}
+
+message EnviarLista {
+    Listado listado = 1;
+}
+
+message RecibirLista {
+    repeated string listaid = 1;
+}
+
 service MensajeService{
     rpc Create(Crearmensaje) returns (Respuestamensaje);
+    rpc CreateLista(ConsultarLista) returns (RespuestaLista);
+    rpc CreateMutuo(EnviarLista) returns (RecibirLista);
 }
