@@ -62,10 +62,25 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 }
 
 func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.RespuestaLista, error) {
+	var direccionAleatoria string
 
 	fmt.Println("Solicitud de " + req.Estado.Nombre + " recibida")
 
-	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+	rand.Seed(time.Now().UnixNano())
+	numeroAleatorio := rand.Intn(3)
+
+	if numeroAleatorio == 0 {
+		direccionAleatoria = "50052"
+
+	} else if numeroAleatorio == 1 {
+		direccionAleatoria = "50053"
+
+	} else if numeroAleatorio == 2 {
+		direccionAleatoria = "50054"
+
+	}
+
+	conn, err := grpc.Dial("localhost:"+direccionAleatoria, grpc.WithInsecure())
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())

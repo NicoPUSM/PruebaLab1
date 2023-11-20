@@ -12,3 +12,6 @@ AgregarBase centro2 camp3 22
 AgregarBase centro camp2 34
 AgregarBase centro camp122 44
 BorrarBase centro camp2
+AgregarBase centro camp23 344
+BorrarBase centro camp122
+AgregarBase centro camp65 34444
