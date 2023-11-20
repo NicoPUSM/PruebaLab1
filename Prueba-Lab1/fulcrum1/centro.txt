@@ -2,3 +2,6 @@ cam1 23
 cam2 45
 cam55 3232
 cam22 80
+camp 2
+camp 3
+camp122 44

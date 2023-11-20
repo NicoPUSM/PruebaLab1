@@ -6,3 +6,9 @@ AgregarBase centro cam55 3232
 AgregarBase centro cam22 80
 AgregarBase centro2 cam22 80
 BorrarBase centro cam4
+AgregarBase centro camp 2
+AgregarBase centro camp 3
+AgregarBase centro2 camp3 22
+AgregarBase centro camp2 34
+AgregarBase centro camp122 44
+BorrarBase centro camp2

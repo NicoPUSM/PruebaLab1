@@ -28,7 +28,7 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 
 	serviceClient1 := pb.NewMensajeServiceClient(conn1)
 
-	_, err := serviceClient1.CreateActualiza(context.Background(), &pb.CrearActualizacion{
+	_, err = serviceClient1.CreateActualiza(context.Background(), &pb.CrearActualizacion{
 		Actualiza: &pb.Actualizar{
 			Nombre: req.Mensaje.Nombre,
 		},
@@ -46,7 +46,7 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 
 	serviceClient2 := pb.NewMensajeServiceClient(conn2)
 
-	_, err := serviceClient2.CreateActualiza(context.Background(), &pb.CrearActualizacion{
+	_, err = serviceClient2.CreateActualiza(context.Background(), &pb.CrearActualizacion{
 		Actualiza: &pb.Actualizar{
 			Nombre: req.Mensaje.Nombre,
 		},

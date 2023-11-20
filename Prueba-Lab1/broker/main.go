@@ -72,6 +72,10 @@ func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.R
 
 }
 
+func (s *server) CreateActualiza(ctx context.Context, req *pb.CrearActualizacion) (*pb.RespuestaActualizacion, error) {
+	return nil, fmt.Errorf("CreateActualiza is not implemented")
+}
+
 func main() {
 
 	listner, err := net.Listen("tcp", ":50051")
