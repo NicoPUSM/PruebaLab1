@@ -1,12 +1,4 @@
-cam1 23
-cam2 45
-cam55 3232
-cam22 80
-camp 2
-camp 3
-camp23 344
-camp65 34444
-camp3444 2333
-camp34 333
-camp23 4
-camp3 344
+camp1 23
+camp2 34
+camp3 4555
+camp4 32
