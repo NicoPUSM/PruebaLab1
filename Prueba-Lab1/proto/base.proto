@@ -28,7 +28,20 @@ message RespuestaLista {
     repeated string estadoid = 1;
 }
 
+message Actualizar {
+    string nombre = 1;
+}
+
+message CrearActualizacion{
+    Actualizar actualiza = 1;
+}
+
+message RespuestaActualizacion{
+    string actualizaid = 1;
+}
+
 service MensajeService{
     rpc Create(Crearmensaje) returns (Respuestamensaje);
     rpc CreateLista(ConsultarLista) returns (RespuestaLista);
+    rpc CreateActualiza(CrearActualizacion) returns (RespuestaActualizacion);
 }

@@ -1,0 +1,8 @@
+AgregarBase centro cam1 23
+AgregarBase centro cam2 45
+AgregarBase centro cam4 4222
+AgregarBase centro1 cam3 333
+AgregarBase centro cam55 3232
+AgregarBase centro cam22 80
+AgregarBase centro2 cam22 80
+BorrarBase centro cam4

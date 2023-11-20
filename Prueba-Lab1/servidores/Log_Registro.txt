@@ -1,5 +1,0 @@
-AgregarBase centro campamento1 23
-AgregarBase centro campamento2 34
-AgregarBase centro1 campamento1 23
-AgregarBase centro campamento34 33
-AgregarBase centro1 campamento34 33

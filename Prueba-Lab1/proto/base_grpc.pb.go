@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type MensajeServiceClient interface {
 	Create(ctx context.Context, in *Crearmensaje, opts ...grpc.CallOption) (*Respuestamensaje, error)
 	CreateLista(ctx context.Context, in *ConsultarLista, opts ...grpc.CallOption) (*RespuestaLista, error)
+	CreateActualiza(ctx context.Context, in *CrearActualizacion, opts ...grpc.CallOption) (*RespuestaActualizacion, error)
 }
 
 type mensajeServiceClient struct {
@@ -52,12 +53,22 @@ func (c *mensajeServiceClient) CreateLista(ctx context.Context, in *ConsultarLis
 	return out, nil
 }
 
+func (c *mensajeServiceClient) CreateActualiza(ctx context.Context, in *CrearActualizacion, opts ...grpc.CallOption) (*RespuestaActualizacion, error) {
+	out := new(RespuestaActualizacion)
+	err := c.cc.Invoke(ctx, "/grpc.MensajeService/CreateActualiza", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MensajeServiceServer is the server API for MensajeService service.
 // All implementations must embed UnimplementedMensajeServiceServer
 // for forward compatibility
 type MensajeServiceServer interface {
 	Create(context.Context, *Crearmensaje) (*Respuestamensaje, error)
 	CreateLista(context.Context, *ConsultarLista) (*RespuestaLista, error)
+	CreateActualiza(context.Context, *CrearActualizacion) (*RespuestaActualizacion, error)
 	mustEmbedUnimplementedMensajeServiceServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedMensajeServiceServer) Create(context.Context, *Crearmensaje) 
 }
 func (UnimplementedMensajeServiceServer) CreateLista(context.Context, *ConsultarLista) (*RespuestaLista, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLista not implemented")
+}
+func (UnimplementedMensajeServiceServer) CreateActualiza(context.Context, *CrearActualizacion) (*RespuestaActualizacion, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateActualiza not implemented")
 }
 func (UnimplementedMensajeServiceServer) mustEmbedUnimplementedMensajeServiceServer() {}
 
@@ -120,6 +134,24 @@ func _MensajeService_CreateLista_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MensajeService_CreateActualiza_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CrearActualizacion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MensajeServiceServer).CreateActualiza(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.MensajeService/CreateActualiza",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MensajeServiceServer).CreateActualiza(ctx, req.(*CrearActualizacion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MensajeService_ServiceDesc is the grpc.ServiceDesc for MensajeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var MensajeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateLista",
 			Handler:    _MensajeService_CreateLista_Handler,
+		},
+		{
+			MethodName: "CreateActualiza",
+			Handler:    _MensajeService_CreateActualiza_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
