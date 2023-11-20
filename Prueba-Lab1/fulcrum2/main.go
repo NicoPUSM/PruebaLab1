@@ -445,7 +445,7 @@ func consistenciaEventual() {
 	for {
 		select {
 		case <-time.After(60 * time.Second):
-			fmt.Println("Hola")
+			fmt.Println("Evento de consistencia")
 		}
 	}
 }
