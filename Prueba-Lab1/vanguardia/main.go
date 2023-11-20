@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
+	"os"
+	"strings"
 
 	pb "github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto"
 	"google.golang.org/grpc"
@@ -10,15 +13,23 @@ import (
 
 func main() {
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-	var estado string
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())
 	}
+	defer conn.Close()
+
+	scanner := bufio.NewScanner(os.Stdin)
+
 	for {
-		fmt.Print("Escribe infectado o muerto: ")
-		fmt.Scan(&estado)
-		fmt.Println(estado)
+		fmt.Print("Escribe el sector que consultar: ")
+
+		scanner.Scan()
+		estado := scanner.Text()
+
+		if strings.ToLower(estado) == "exit" {
+			break
+		}
 
 		serviceClient := pb.NewMensajeServiceClient(conn)
 
@@ -32,8 +43,8 @@ func main() {
 			panic("no se creo el mensaje" + err.Error())
 		}
 
-		for _, nombre := range res.Estadoid {
-			fmt.Println(nombre)
+		for _, lista := range res.Estadoid {
+			fmt.Println(lista)
 		}
 
 		fmt.Println(" ")
