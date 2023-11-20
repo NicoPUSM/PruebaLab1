@@ -241,11 +241,17 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 		}
 
 	}
-	s.relojVectorial[0]++
+	s.relojVectorial[2]++
 	fmt.Println(s.relojVectorial)
 
+	cadena := make([]string, len(s.relojVectorial))
+	for i, num := range s.relojVectorial {
+		cadena[i] = fmt.Sprint(num)
+	}
+	resultado := strings.Join(cadena, ",")
+
 	return &pb.Respuestamensaje{
-		Mensajeid: req.Mensaje.Nombre,
+		Mensajeid: resultado,
 	}, nil
 }
 

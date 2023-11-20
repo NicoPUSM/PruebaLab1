@@ -33,8 +33,6 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 
 	}
 
-	fmt.Println("Solicitud de " + req.Mensaje.Nombre + " recibida, mensaje enviado: " + req.Mensaje.Nombre)
-
 	conn, err := grpc.Dial("localhost:"+direccionAleatoria, grpc.WithInsecure())
 
 	if err != nil {
@@ -57,7 +55,7 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	fmt.Println("Estado enviado:", res.Mensajeid)
 
 	return &pb.Respuestamensaje{
-		Mensajeid: req.Mensaje.Nombre,
+		Mensajeid: res.Mensajeid,
 	}, nil
 }
 
