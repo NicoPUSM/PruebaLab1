@@ -258,6 +258,14 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.RespuestaLista, error) {
 	lista := []string{}
 
+	cadena := make([]string, len(s.relojVectorial))
+	for i, num := range s.relojVectorial {
+		cadena[i] = fmt.Sprint(num)
+	}
+	resultado := "Fulcrum 3: " + strings.Join(cadena, ",")
+
+	lista = append(lista, resultado)
+
 	archivo, err := os.OpenFile(req.Estado.Nombre+".txt", os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println("Error al abrir el archivo", err)
