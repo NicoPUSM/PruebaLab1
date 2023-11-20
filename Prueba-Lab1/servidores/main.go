@@ -23,23 +23,23 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 
 	palabras := strings.Split(req.Mensaje.Nombre, " ")
 
-	archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
-	if err != nil {
-		fmt.Println("Error al abrir el archivo", err)
-		return nil, err
-	}
-
 	log_registro, err := os.OpenFile("Log_Registro.txt", os.O_RDWR|os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println("Error al abrir el archivo", err)
 		return nil, err
 	}
 
-	defer archivo.Close()
-
 	defer log_registro.Close()
 
 	if palabras[0] == "AgregarBase" {
+		archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println("Error al abrir el archivo", err)
+			return nil, err
+		}
+
+		defer archivo.Close()
+
 		_, err = archivo.WriteString(palabras[2] + " " + palabras[3] + "\n")
 
 		if err != nil {
@@ -55,6 +55,14 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 		}
 
 	} else if palabras[0] == "RenombrarBase" {
+		archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println("Error al abrir el archivo", err)
+			return nil, err
+		}
+
+		defer archivo.Close()
+
 		var nuevoContenido []string
 		scanner := bufio.NewScanner(archivo)
 
@@ -97,6 +105,14 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 		}
 
 	} else if palabras[0] == "ActualizarValor" {
+		archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println("Error al abrir el archivo", err)
+			return nil, err
+		}
+
+		defer archivo.Close()
+
 		var nuevoContenido []string
 		scanner := bufio.NewScanner(archivo)
 
@@ -139,6 +155,14 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 		}
 
 	} else if palabras[0] == "BorrarBase" {
+		archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println("Error al abrir el archivo", err)
+			return nil, err
+		}
+
+		defer archivo.Close()
+
 		var nuevoContenido []string
 		scanner := bufio.NewScanner(archivo)
 

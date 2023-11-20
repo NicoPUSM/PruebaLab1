@@ -1,3 +1,0 @@
-campamento1 32
-campamento2 12
-campamento3 1000
