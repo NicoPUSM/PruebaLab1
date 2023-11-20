@@ -2,3 +2,4 @@ AgregarBase centro camp1 23
 AgregarBase centro camp2 34
 AgregarBase centro camp3 4555
 AgregarBase centro camp4 32
+AgregarBase centro camp7 211

@@ -2,3 +2,5 @@ camp1 23
 camp2 34
 camp3 4555
 camp4 32
+camp6 33
+camp7 211
