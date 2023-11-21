@@ -1,0 +1,15 @@
+FROM golang:1.13
+
+WORKDIR /F3
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY F3/main.go ./
+
+RUN go github.com/NicoPUSM/PruebaLab1/Prueba-Lab1/proto
+
+RUN go build -o F3_bin .
+
+ENTRYPOINT [ "./F3_bin" ]

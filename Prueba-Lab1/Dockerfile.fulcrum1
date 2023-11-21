@@ -1,0 +1,15 @@
+FROM golang:1.13
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod download
+
+WORKDIR /app/fulcrum1
+
+RUN go build -o main .
+
+EXPOSE 50085
+
+CMD ["./main"]
