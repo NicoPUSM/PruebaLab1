@@ -3,3 +3,5 @@ AgregarBase centro camp2 34
 AgregarBase centro camp3 4555
 AgregarBase centro camp4 32
 AgregarBase centro camp7 211
+AgregarBase centro camp56 44
+RenombrarBase centro camp3 fuuu

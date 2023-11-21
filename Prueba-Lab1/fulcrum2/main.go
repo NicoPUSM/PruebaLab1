@@ -266,19 +266,24 @@ func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.R
 
 	lista = append(lista, resultado)
 
-	archivo, err := os.OpenFile(req.Estado.Nombre+".txt", os.O_RDWR|os.O_CREATE, 0666)
+	palabras := strings.Split(req.Estado.Nombre, " ")
+
+	archivo, err := os.OpenFile(palabras[1]+".txt", os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println("Error al abrir el archivo", err)
 		return nil, err
 	}
-	defer archivo.Close()
 
+	defer archivo.Close()
 	scanner := bufio.NewScanner(archivo)
+
 	for scanner.Scan() {
 		line := scanner.Text()
+		div := strings.Fields(line)
 
-		lista = append(lista, line)
-
+		if div[0] == palabras[2] {
+			lista = append(lista, div[1])
+		}
 	}
 
 	return &pb.RespuestaLista{

@@ -1,1 +1,3 @@
 AgregarBase centro camp6 33
+BorrarBase centro camp2
+ActualizarValor centro camp3 32
