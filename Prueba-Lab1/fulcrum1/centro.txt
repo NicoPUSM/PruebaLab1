@@ -1,6 +1,0 @@
-camp1 23
-fuuu 32
-camp4 32
-camp6 33
-camp7 211
-camp56 44

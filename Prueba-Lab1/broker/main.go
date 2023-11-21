@@ -23,17 +23,17 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	numeroAleatorio := rand.Intn(3)
 
 	if numeroAleatorio == 0 {
-		direccionAleatoria = "50052"
+		direccionAleatoria = "dist085:50052"
 
 	} else if numeroAleatorio == 1 {
-		direccionAleatoria = "50053"
+		direccionAleatoria = "dist086:50053"
 
 	} else if numeroAleatorio == 2 {
-		direccionAleatoria = "50054"
+		direccionAleatoria = "dist087:50054"
 
 	}
 
-	conn, err := grpc.Dial("localhost:"+direccionAleatoria, grpc.WithInsecure())
+	conn, err := grpc.Dial(direccionAleatoria, grpc.WithInsecure())
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())
@@ -68,17 +68,16 @@ func (s *server) CreateLista(ctx context.Context, req *pb.ConsultarLista) (*pb.R
 	numeroAleatorio := rand.Intn(3)
 
 	if numeroAleatorio == 0 {
-		direccionAleatoria = "50052"
+		direccionAleatoria = "dist085:50052"
 
 	} else if numeroAleatorio == 1 {
-		direccionAleatoria = "50053"
+		direccionAleatoria = "dist086:50053"
 
 	} else if numeroAleatorio == 2 {
-		direccionAleatoria = "50054"
-
+		direccionAleatoria = "dist087:50054"
 	}
 
-	conn, err := grpc.Dial("localhost:"+direccionAleatoria, grpc.WithInsecure())
+	conn, err := grpc.Dial(direccionAleatoria, grpc.WithInsecure())
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())

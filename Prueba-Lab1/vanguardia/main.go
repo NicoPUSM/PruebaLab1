@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial("dist088:50051", grpc.WithInsecure())
 
 	if err != nil {
 		panic("no se puede conectar con el servidor" + err.Error())

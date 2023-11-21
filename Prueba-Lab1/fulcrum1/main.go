@@ -19,8 +19,8 @@ type server struct {
 }
 
 func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuestamensaje, error) {
-	//Extra
-	conn1, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+
+	conn1, err := grpc.Dial("dist086:50053", grpc.WithInsecure())
 	if err != nil {
 		panic("no se puede conectar con el servidor 1" + err.Error())
 	}
@@ -38,7 +38,7 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 		panic("no se creo el mensaje en el servidor 1" + err.Error())
 	}
 
-	conn2, err := grpc.Dial("localhost:50054", grpc.WithInsecure())
+	conn2, err := grpc.Dial("dist087:50054", grpc.WithInsecure())
 	if err != nil {
 		panic("no se puede conectar con el servidor 2" + err.Error())
 	}
@@ -55,8 +55,6 @@ func (s *server) Create(ctx context.Context, req *pb.Crearmensaje) (*pb.Respuest
 	if err != nil {
 		panic("no se creo el mensaje en el servidor 2" + err.Error())
 	}
-
-	//Importante
 
 	fmt.Println("Solicitud de " + req.Mensaje.Nombre + " recibida, mensaje enviado: " + req.Mensaje.Nombre)
 
